@@ -1,0 +1,22 @@
+{
+  "name": "visa-job-search",
+  "version": "1.0.0",
+  "description": "job search interface for foreign workers in the UK",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/soundobj/visa-job-search.git"
+  },
+  "author": "soundobj",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/soundobj/visa-job-search/issues"
+  },
+  "homepage": "https://github.com/soundobj/visa-job-search#readme",
+  "dependencies": {
+    "react": "^16.4.2"
+  }
+}
