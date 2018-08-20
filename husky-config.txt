@@ -1,0 +1,2 @@
+    "precommit": "cross-env npm run lint && npm test",
+    "prepush": "cross-env npm run lint && npm test",
