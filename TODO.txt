@@ -1,0 +1,10 @@
+@TODO: create weekly cron job
+@TODO: fetch pdf: deal with cached responses
+@TODO: parse pdf to extract metadata
+@TODO: study indeed search api https://market.mashape.com/indeed/indeed, http://opensource.indeedeng.io/api-documentation/docs/job-search/
+@TODO: create search UI form
+@TODO: make call to indeed API
+@TODO: render results
+
+
+

@@ -8,3 +8,5 @@ react webpack configuration based on https://github.com/KleoPetroff/react-webpac
 
 mocks: uses json server
 git
+
+execute es6 code using babel-node /path/to/script.js
