@@ -1,3 +1,4 @@
+// babel-node scripts/fp/exercise1.js
 import R from 'ramda';
 
 //Currying exercises
