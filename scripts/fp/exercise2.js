@@ -1,6 +1,6 @@
 // babel-node scripts/fp/exercise2.js
 // Containers, Functors
-import { curry, compose, map, concat, add, toString } from 'ramda';
+import { curry, compose, map, concat, add, toString, identity } from 'ramda';
 
 class Container { // AKA identity
     constructor(x) {
@@ -110,5 +110,29 @@ const getAge = curry((now, user) => {
 const fortune = compose(concat('If you survive, you will be '), toString, add(1));
 // zoltar :: User -> Either(String, _)
 const zoltar = compose(map(fortune), getAge(moment()));
-console.error("right:", zoltar({ birthDate: '2005-12-12' }));
-console.error("left:", zoltar({ birthDate: 'balloons!' }));
+// console.error("right:", zoltar({ birthDate: '2005-12-12' }));
+// console.error("left:", zoltar({ birthDate: 'balloons!' }));
+
+
+
+// either :: (a -> c) -> (b -> c) -> Either a b -> c
+const either = curry((f, g, e) => {
+    let result;
+    switch (e.constructor) {
+        case Left:
+            result = f(e.$value);
+            break;
+        case Right:
+            result = g(e.$value);
+            break;
+// No Default
+    }
+    return result;
+});
+// zoltar :: User -> _
+const zoltar1 = compose(console.log, either(identity, fortune), getAge(moment()));
+zoltar1({ birthDate: '2005-12-12' });
+// 'If you survive, you will be 10'
+// undefined
+zoltar1({ birthDate: 'balloons!' });
+// 'Birth date coul
