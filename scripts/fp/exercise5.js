@@ -1,13 +1,11 @@
 // Asynchronous Task exercise
-import fs from 'fs';
-import { split, head } from 'ramda';
-import { task } from 'folktale/concurrency'
+import { split, head, composeP } from 'ramda';
 
 // readFile :: String -> Task Error String
-const readFile = filename => task((reject, result) => {
-    fs.readFile(filename, (err, data) => (err ? reject(err) : result(data)));
+const readFile = filename => new Promise((resolve, reject) => {
+    setTimeout(() => resolve('bli\nblo'), 1000);
 });
 
-const file = readFile('./mocks/metamorphosis').map(split('\n')).map(head);
+const file = composeP(head, split('\n'), readFile);
 
-console.error("file", file);
+file('bla').then(x => console.error("end", x));
