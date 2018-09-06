@@ -38,6 +38,7 @@
     "baconjs": "^2.0.9",
     "cross-env": "5.2.0",
     "express": "^4.16.3",
+    "fluture": "^10.1.0",
     "folktale": "^2.3.0",
     "hummus": "^1.0.90",
     "jquery": "^3.3.1",
