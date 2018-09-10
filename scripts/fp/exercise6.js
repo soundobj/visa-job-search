@@ -36,10 +36,15 @@ const eitherWelcome = compose(map(showWelcome), checkActive);
 // console.error("eitherWelcome", eitherWelcome(activeUser));
 
 // 4 - EXERCISE 4
+
+// Dummy Data
 const validateActiveUserOK = {id: 2, name: 'Peter', active: true};
 const validateActiveUserNotOK = {id: 2, name: 'Jo', active: true};
+
 // validateUser :: (User -> Either String ()) -> User -> Either String User
-const validateUser = curry((validate, user) => validate(user).map(_ => user));
+const validateUser = curry((validate, user) => validate(user).map(_ => user)); // need to better understand this!
+
+/* ========== my soddy solution ============ */
 // save :: User -> IO User
 const save = user => new IO(() => ({ user: user, saved: true }));
 // Exercise
@@ -78,6 +83,7 @@ const saveB = user => new IO(() => ({ ...user, saved: true }));
 
 const saveAndWelcome = compose(map(showWelcome), saveB);
 
+// saveAndWelcome  already returns an IO, the either first argument IO.of lifts the Maybe into a IO
 const registerBookE = compose(
   either(IO.of, saveAndWelcome),
   validateUser(validateNameB),
