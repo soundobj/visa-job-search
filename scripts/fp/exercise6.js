@@ -34,7 +34,7 @@ const activeUser = {id: 2, name: 'Peter', active: true};
 const eitherWelcome = compose(map(showWelcome), checkActive);
 // console.error("eitherWelcome", eitherWelcome(activeUser));
 
-// 4 -
+// 4 - EXERCISE 4
 
 // either :: (a -> c) -> (b -> c) -> Either a b -> c
 const either = curry((f, g, e) => {
