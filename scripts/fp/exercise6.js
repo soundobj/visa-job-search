@@ -42,16 +42,38 @@ const validateActiveUserOK = {id: 2, name: 'Peter', active: true};
 const validateActiveUserNotOK = {id: 2, name: 'Jo', active: true};
 
 // validateUser :: (User -> Either String ()) -> User -> Either String User
-const validateUser = curry((validate, user) => validate(user).map(_ => user)); // need to better understand this!
+// we are passing the user object via .map to the output of validate()
+const validateUser = curry((validate, user) => validate(user).map(() => user));
+
+// save :: User -> IO User
+const save = user => new IO(() => ({ ...user, saved: true }));
+
+// ============ BOOK solution ================
+
+const validateNameB = ({ name }) => (name.length > 3
+    ? Either.of(null)
+    : left('Your name need to be > 3')
+);
+
+const saveAndWelcome = compose(map(showWelcome), save);
+
+// saveAndWelcome  already returns an IO, the either first argument IO.of lifts the Maybe into a IO
+const registerBookE = compose(
+  either(IO.of, saveAndWelcome),
+  validateUser(validateNameB),
+);
+
+console.error("rgbFail", registerBookE(validateActiveUserNotOK).effectFn());
+console.error("rgb", registerBookE(validateActiveUserOK).effectFn());
 
 /* ========== my soddy solution ============ */
-// save :: User -> IO User
-const save = user => new IO(() => ({ user: user, saved: true }));
 // Exercise
 // Write a function `validateName` which checks whether a user has a name longer than 3
 // characters or return an error message. Then use `either`, `showWelcome` and `save` to
 // write a `register` function to signup and welcome a user when the validation is ok.
 //   Remember either's two arguments must return the same type.
+
+const saveB = user => new IO(() => ({ ...user, saved: true }));
 const success = (res) => {
   return new IO(() => `Logged succesfully ${res.effectFn().user}`)
 };
@@ -63,7 +85,7 @@ const noGood = (res) => {
   return new IO(() => `Could not log in: ${res}`);
 };
 
-const signUp =  compose(success, save);
+const signUp =  compose(success, saveB);
 
 // register :: User -> IO String
 const registerBook = compose(either(noGood, signUp), validateName);
@@ -71,23 +93,3 @@ const successRegister = registerBook(validateActiveUserOK);
 const notSuccessRegister = registerBook(validateActiveUserNotOK);
 // console.error("sr", successRegister.effectFn());
 // console.error("nsr", notSuccessRegister.effectFn());
-
-// ============ BOOK solution ================
-
-const validateNameB = ({ name }) => (name.length > 3
-    ? Either.of(null)
-    : left('Your name need to be > 3')
-);
-
-const saveB = user => new IO(() => ({ ...user, saved: true }));
-
-const saveAndWelcome = compose(map(showWelcome), saveB);
-
-// saveAndWelcome  already returns an IO, the either first argument IO.of lifts the Maybe into a IO
-const registerBookE = compose(
-  either(IO.of, saveAndWelcome),
-  validateUser(validateNameB),
-);
-
-console.error("rgbFail", registerBookE(validateActiveUserNotOK).effectFn());
-console.error("rgb", registerBookE(validateActiveUserOK).effectFn());
