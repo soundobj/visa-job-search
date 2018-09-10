@@ -18,5 +18,3 @@ const readFileF = Future((rej, res) => {
 });
 
 readFileF.map(split('\n')).map(head).fork(console.log, console.error);
-
-
