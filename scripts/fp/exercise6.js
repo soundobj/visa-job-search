@@ -99,5 +99,5 @@ const registerBookE = compose(
   validateUser(validateNameB),
 );
 
-console.error("rgb", registerBookE(validateActiveUserNotOK).effectFn());
+console.error("rgbFail", registerBookE(validateActiveUserNotOK).effectFn());
 console.error("rgb", registerBookE(validateActiveUserOK).effectFn());
