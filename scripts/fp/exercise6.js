@@ -1,6 +1,7 @@
 // Exercises Tupperware chapter
 import { compose, head, curry, concat, add, prop, map, length, identity } from 'ramda';
 import { Maybe, Either, Left, IO, id, Right } from 'monet';
+import either from './utils/either';
 
 // 1 - Use `add` and `map` to make a function that increments a value inside a functor.
 const initialVal = Maybe.of(1);
@@ -35,28 +36,11 @@ const eitherWelcome = compose(map(showWelcome), checkActive);
 // console.error("eitherWelcome", eitherWelcome(activeUser));
 
 // 4 - EXERCISE 4
-
-// either :: (a -> c) -> (b -> c) -> Either a b -> c
-const either = curry((f, g, e) => {
-  let result;
-
-  switch (e.isRightValue) {
-    case false:
-      result = f(e.value);
-      break;
-    case true:
-      result = g(e.value);
-      break;
-// No Default
-  }
-  return result;
-});
-
 const validateActiveUserOK = {id: 2, name: 'Peter', active: true};
 const validateActiveUserNotOK = {id: 2, name: 'Jo', active: true};
 // validateUser :: (User -> Either String ()) -> User -> Either String User
 const validateUser = curry((validate, user) => validate(user).map(_ => user));
-// save :: User -> IO User  // @TODO: check why spread operator ... is not working when building the IO payload
+// save :: User -> IO User
 const save = user => new IO(() => ({ user: user, saved: true }));
 // Exercise
 // Write a function `validateName` which checks whether a user has a name longer than 3
