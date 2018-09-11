@@ -3,7 +3,7 @@ import { curry } from 'ramda';
  * @function either
  * @param {function} f the function to apply to the value e if isRightValue
  * @param {function} g the function to apply to the value e  if not isRightValue
- * @param {Maybe} e value inside the Maybe
+ * @param {Either} e value inside the Either
  * @requires https://www.npmjs.com/package/ramda
  * @requires https://www.npmjs.com/package/monet
  * either :: (a -> c) -> (b -> c) -> Either a b -> c
