@@ -18,7 +18,7 @@ const initial = compose(map(head), safeProp('name'));
 
 // 3 - Given the following helper functions:
 
-const left = a => new Left(a);
+  const left = a => new Left(a);
 // showWelcome :: User -> String
 const showWelcome = compose(concat('Welcome '), prop('name'));
 // checkActive :: User -> Either String User
