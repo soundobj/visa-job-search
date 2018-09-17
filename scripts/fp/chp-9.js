@@ -1,7 +1,9 @@
-import { curry, compose, prop, split, last, map, add, contains, chain, append, join } from 'ramda';
+import { curry, compose, prop, split, last, map, add, contains, chain, append, join, toUpper } from 'ramda';
 import { Maybe, IO, Either, Left } from 'monet';
 import either from './utils/either';
+import inspect from './utils/inspect';
 
+const inspectAndLog = compose(console.log, inspect);
 // safeProp :: String -> Object -> Maybe a
 const safeProp = curry((p, obj) => compose(Maybe.of, prop(p))(obj));
 
@@ -67,13 +69,25 @@ const appliedAddToMailingList = addToMailingList(mailingList);
 const emailBlast = list => new IO(() => console.log(`sending email to list: ${join(',', list)}`) );
 
 //@TODO: use either to fork depending on Maybe value
+const print = val => {
+  return val.isRightValue
+    ? val.value.effectFn()
+    : val.value
+};
+
 const joinMailingList = compose(
-  map(compose(chain(emailBlast), appliedAddToMailingList)),
+  print, map(compose(chain(emailBlast), appliedAddToMailingList)),
   validateEmail,
 );
 
 const res = joinMailingList('peter@be.me');
-console.error("res", res);
+
+
+// example of map on a type
+// const t = map(x => `before${x}`);
+// const wait =  t(IO.of('bla'));
+// console.error("s", wait.effectFn());
+
 
 // example of manipulating IO list
 // const IOChain = IO.of(['1','2','3'])
