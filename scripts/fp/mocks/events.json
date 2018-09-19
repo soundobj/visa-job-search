@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "name": "hiking",
+    "users": [1,2]
+  },
+  {
+    "id": 2,
+    "name": "diving",
+    "users": [3]
+  },
+  {
+    "id": 1,
+    "name": "running",
+    "users": [1,3]
+  },
+  {
+    "id": 1,
+    "name": "acting",
+    "users": [1]
+  }
+]
